@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator Bilangan Prima</title>
+  <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      /* klasik & old-school */
+      background: url('https://i.pinimg.com/originals/92/8b/3a/928b3a7c6aa54d5a8f438c18a5f5417c.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #5b3a29;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .box {
+      background: rgba(255, 245, 230, 0.9);
+      border: 2px solid #d4b483;
+      border-radius: 15px;
+      padding: 30px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+      box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      font-family: 'Lucida Handwriting', cursive;
+      font-size: 26px;
+      margin-bottom: 20px;
+      color: #a55b3a;
+    }
+
+    input,
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #d4b483;
+      font-size: 16px;
+      font-family: inherit;
+    }
+
+    input {
+      background: #fff6e5;
+      color: #5b3a29;
+    }
+
+    input::placeholder {
+      color: #a67c52;
+    }
+
+    button {
+      background: #f5c29f;
+      color: #5b3a29;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #f0b080;
+      transform: scale(1.05);
+    }
+
+    #hasil,
+    #daftarPrima {
+      margin-top: 15px;
+      font-size: 16px;
+      word-wrap: break-word;
+    }
+
+    @media (max-width: 500px) {
+      .box {
+        padding: 20px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+    <h2>Kalkulator Bilangan Prima</h2>
+
+    <input type="number" id="angka" placeholder="Masukkan angka..." />
+    <button onclick="cekPrima()">Cek</button>
+
+    <div id="hasil"></div>
+    <div id="daftarPrima"></div>
+  </div>
+
+  <script>
+    function cekPrima() {
+      let n = parseInt(document.getElementById("angka").value);
+      if (isNaN(n) || n < 1) {
+        document.getElementById("hasil").innerHTML = "Masukkan angka valid!";
+        document.getElementById("daftarPrima").innerHTML = "";
+        return;
+      }
+
+      let prima = true;
+      if (n < 2) prima = false;
+      for (let i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) { prima = false; break; }
+      }
+
+      document.getElementById("hasil").innerHTML =
+        prima ? n + " adalah bilangan prima ✔️" : n + " bukan bilangan prima ❌";
+
+      let list = [];
+      for (let x = 2; x <= n; x++) {
+        let flag = true;
+        for (let y = 2; y <= Math.sqrt(x); y++) {
+          if (x % y === 0) { flag = false; break; }
+        }
+        if (flag) list.push(x);
+      }
+      document.getElementById("daftarPrima").innerHTML =
+        "<br><b>Daftar bilangan prima ≤ " + n + ":</b><br>" + list.join(", ");
+    }
+  </script>
+
+</body>
+
+</html>
